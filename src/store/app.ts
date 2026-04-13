@@ -1,0 +1,120 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import type { Script, Template, CarModel, HistoryItem, DashboardStats, QuickAction } from '@/types'
+
+export const useAppStore = defineStore('app', () => {
+  // Dashboard Stats
+  const stats = ref<DashboardStats>({
+    totalScripts: 2847,
+    todayScripts: 23,
+    weekScripts: 156,
+    totalTemplates: 128,
+    totalCarModels: 45,
+    storageUsed: 2.8,
+    storageTotal: 10
+  })
+
+  // Quick Actions
+  const quickActions = ref<QuickAction[]>([
+    { id: '1', title: '智能生成', description: 'AI一键生成脚本', icon: 'sparkle', route: '/generate', color: '#165DFF' },
+    { id: '2', title: '模板市场', description: '浏览口播模板', icon: 'grid', route: '/templates', color: '#00B42A' },
+    { id: '3', title: '知识库', description: '车型参数查询', icon: 'database', route: '/knowledge', color: '#FF7D00' },
+    { id: '4', title: '我的创作', description: '查看生成历史', icon: 'clock', route: '/history', color: '#14A9FF' }
+  ])
+
+  // Recent Scripts
+  const recentScripts = ref<Script[]>([
+    { id: '1', title: '问界M9城市路况实测', content: '...', type: '评测', carModel: '问界M9', tags: ['新能源', 'SUV', '智能驾驶'], duration: 120, status: '已使用', createdAt: '2024-03-18 14:30', updatedAt: '2024-03-18 14:30' },
+    { id: '2', title: '小米SU7外观设计解读', content: '...', type: '口播', carModel: '小米SU7', tags: ['新能源', '轿车', '设计'], duration: 90, status: '已生成', createdAt: '2024-03-18 11:20', updatedAt: '2024-03-18 11:20' },
+    { id: '3', title: '腾势D9对比极氪009', content: '...', type: '对比', carModel: '腾势D9', tags: ['MPV', '新能源', '对比'], duration: 180, status: '已生成', createdAt: '2024-03-17 16:45', updatedAt: '2024-03-17 16:45' },
+    { id: '4', title: '比亚迪天神之眼智驾解析', content: '...', type: '科普', carModel: '比亚迪汉', tags: ['技术', '智能驾驶', '科普'], duration: 150, status: '草稿', createdAt: '2024-03-17 09:15', updatedAt: '2024-03-18 10:00' }
+  ])
+
+  // Templates
+  const templates = ref<Template[]>([
+    { id: '1', name: '新车发布口播模板', description: '适用于新车上市宣传视频的通用口播模板', content: '', category: '新车发布', tags: ['新品', '发布', '通用'], usageCount: 328, isFavorite: true, createdAt: '2024-02-01', updatedAt: '2024-03-15' },
+    { id: '2', name: '试驾体验模板', description: '沉浸式试驾体验分享，包含多场景描述', content: '', category: '试驾体验', tags: ['试驾', '体验', '场景'], usageCount: 256, isFavorite: true, createdAt: '2024-02-05', updatedAt: '2024-03-10' },
+    { id: '3', name: '技术解析模板', description: '深度解析汽车技术亮点的专业口播模板', content: '', category: '技术解析', tags: ['技术', '解析', '专业'], usageCount: 189, isFavorite: false, createdAt: '2024-02-10', updatedAt: '2024-03-08' },
+    { id: '4', name: '对比测评模板', description: '车型对比视频的专业评测话术模板', content: '', category: '对比测评', tags: ['对比', '测评', '专业'], usageCount: 167, isFavorite: false, createdAt: '2024-02-15', updatedAt: '2024-03-05' },
+    { id: '5', name: '性价比推荐模板', description: '适合推荐高性价比车型的口播模板', content: '', category: '购车推荐', tags: ['推荐', '性价比', '购车'], usageCount: 234, isFavorite: true, createdAt: '2024-02-20', updatedAt: '2024-03-12' },
+    { id: '6', name: '女性购车指南模板', description: '专为女性用户打造的选车购车指南', content: '', category: '购车推荐', tags: ['女性', '购车', '指南'], usageCount: 145, isFavorite: false, createdAt: '2024-02-25', updatedAt: '2024-03-01' }
+  ])
+
+  // Car Models Knowledge Base
+  const carModels = ref<CarModel[]>([
+    { id: '1', name: '问界M9', brand: 'AITO', category: 'SUV', price: '46.98-56.98万', releaseDate: '2023-12-26', specs: { engine: '纯电动', transmission: '电动车单速变速箱', power: '365kW', torque: '675N·m', acceleration: '4.8s', fuelConsumption: '-', dimensions: '5230×1999×1800mm', wheelbase: '3110mm' }, sellingPoints: [{ id: '1', title: '华为鸿蒙座舱', description: '搭载HarmonyOS智能座舱，实现车机与手机无缝流转', highlightLevel: 'high' }, { id: '2', title: '高阶智能驾驶', description: '华为ADS 2.0，支持城市NCA功能', highlightLevel: 'high' }, { id: '3', title: '百万级豪华内饰', description: '零重力座椅、冷暖冰箱等配置', highlightLevel: 'medium' }] },
+    { id: '2', name: '小米SU7', brand: '小米', category: '轿车', price: '21.59-29.99万', releaseDate: '2024-03-28', specs: { engine: '纯电动', transmission: '电动车单速变速箱', power: '220-495kW', torque: '400-838N·m', acceleration: '2.78-5.28s', fuelConsumption: '-', dimensions: '4997×1963×1455mm', wheelbase: '3000mm' }, sellingPoints: [{ id: '1', title: '人车家生态', description: '小米生态链深度整合，手机平板车机无缝连接', highlightLevel: 'high' }, { id: '2', title: '性能旗舰', description: 'Ultra版本2.78s破百，标配碳陶瓷刹车', highlightLevel: 'high' }, { id: '3', title: '智能驾驶', description: 'Xiaomi Pilot Max，激光雷达融合方案', highlightLevel: 'medium' }] },
+    { id: '3', name: '腾势D9', brand: '腾势', category: 'MPV', price: '33.98-66.00万', releaseDate: '2022-08-23', specs: { engine: '插电混动/纯电动', transmission: 'E-CVT', power: '299-374kW', torque: '681-710N·m', acceleration: '7.9s', fuelConsumption: '6.2L/100km', dimensions: '5250×1960×1920mm', wheelbase: '3110mm' }, sellingPoints: [{ id: '1', title: '宜商宜家', description: '豪华MPV定位，满足商务接待和家庭出行', highlightLevel: 'high' }, { id: '2', title: '比亚迪技术背书', description: 'DM-i超级混动+刀片电池', highlightLevel: 'high' }, { id: '3', title: '帝瓦雷音响', description: '14扬声器帝瓦雷定制音响系统', highlightLevel: 'medium' }] },
+    { id: '4', name: '极氪007', brand: '极氪', category: '轿车', price: '20.99-29.99万', releaseDate: '2024-01-01', specs: { engine: '纯电动', transmission: '电动车单速变速箱', power: '310-475kW', torque: '440-710N·m', acceleration: '2.84-5.4s', fuelConsumption: '-', dimensions: '4865×1900×1450mm', wheelbase: '2928mm' }, sellingPoints: [{ id: '1', title: '浩瀚智驾', description: 'Mobileye智驾方案，支持城市NZP', highlightLevel: 'high' }, { id: '2', title: '金砖电池', description: '全球最快充电速度，15分钟充满80%', highlightLevel: 'high' }, { id: '3', title: '极氪设计语言', description: 'Hidden Energy设计，前脸个性化可选', highlightLevel: 'medium' }] },
+    { id: '5', name: '理想L9', brand: '理想', category: 'SUV', price: '45.98万', releaseDate: '2022-06-21', specs: { engine: '增程式', transmission: '电动车单速变速箱', power: '330kW', torque: '620N·m', acceleration: '5.3s', fuelConsumption: '5.9L/100km', dimensions: '5218×1998×1800mm', wheelbase: '3105mm' }, sellingPoints: [{ id: '1', title: '家庭旗舰SUV', description: '大六座布局专为家庭用户设计', highlightLevel: 'high' }, { id: '2', title: '冰箱沙发大彩电', description: '车载冰箱、后排娱乐屏、皇后座', highlightLevel: 'high' }, { id: '3', title: '增程无里程焦虑', description: '综合续航1315km，可油可电', highlightLevel: 'medium' }] }
+  ])
+
+  // History
+  const historyItems = ref<HistoryItem[]>([
+    { id: '1', type: 'script', title: '问界M9城市路况实测', thumbnail: '', carModel: '问界M9', scriptType: '评测', createdAt: '2024-03-18 14:30', duration: 120, status: '完成' },
+    { id: '2', type: 'script', title: '小米SU7外观设计解读', thumbnail: '', carModel: '小米SU7', scriptType: '口播', createdAt: '2024-03-18 11:20', duration: 90, status: '完成' },
+    { id: '3', type: 'script', title: '腾势D9对比极氪009', thumbnail: '', carModel: '腾势D9', scriptType: '对比', createdAt: '2024-03-17 16:45', duration: 180, status: '完成' },
+    { id: '4', type: 'script', title: '比亚迪天神之眼解析', thumbnail: '', carModel: '比亚迪汉', scriptType: '科普', createdAt: '2024-03-17 09:15', duration: 150, status: '完成' },
+    { id: '5', type: '素材', title: '问界M9实拍图集', thumbnail: '', carModel: '问界M9', scriptType: '-', createdAt: '2024-03-16 15:30', status: '完成' },
+    { id: '6', type: 'script', title: '极氪007金砖电池解析', thumbnail: '', carModel: '极氪007', scriptType: '科普', createdAt: '2024-03-16 10:00', duration: 120, status: '完成' },
+    { id: '7', type: 'template', title: '新车发布模板v2.0', thumbnail: '', carModel: '-', scriptType: '模板', createdAt: '2024-03-15 14:20', status: '完成' },
+    { id: '8', type: 'script', title: '理想L9 vs 问界M9', thumbnail: '', carModel: '理想L9', scriptType: '对比', createdAt: '2024-03-15 09:45', duration: 200, status: '处理中' },
+    { id: '9', type: '素材', title: '小米SU7发布会素材', thumbnail: '', carModel: '小米SU7', scriptType: '-', createdAt: '2024-03-14 18:00', status: '完成' },
+    { id: '10', type: 'script', title: '特斯拉FSD入华分析', thumbnail: '', carModel: '特斯拉Model 3', scriptType: '分析', createdAt: '2024-03-14 11:30', duration: 180, status: '完成' }
+  ])
+
+  // Template Categories
+  const templateCategories = computed(() => {
+    const categories = new Set(templates.value.map(t => t.category))
+    return ['全部', ...Array.from(categories)]
+  })
+
+  // Car Brands
+  const carBrands = computed(() => {
+    const brands = new Set(carModels.value.map(c => c.brand))
+    return ['全部品牌', ...Array.from(brands)]
+  })
+
+  // Actions
+  function addToHistory(item: HistoryItem) {
+    historyItems.value.unshift(item)
+  }
+
+  function toggleFavorite(templateId: string) {
+    const template = templates.value.find(t => t.id === templateId)
+    if (template) {
+      template.isFavorite = !template.isFavorite
+    }
+  }
+
+  function searchTemplates(keyword: string, category: string): Template[] {
+    return templates.value.filter(t => {
+      const matchKeyword = !keyword || t.name.includes(keyword) || t.description.includes(keyword)
+      const matchCategory = !category || category === '全部' || t.category === category
+      return matchKeyword && matchCategory
+    })
+  }
+
+  function searchCarModels(keyword: string, brand: string): CarModel[] {
+    return carModels.value.filter(c => {
+      const matchKeyword = !keyword || c.name.includes(keyword) || c.brand.includes(keyword)
+      const matchBrand = !brand || brand === '全部品牌' || c.brand === brand
+      return matchKeyword && matchBrand
+    })
+  }
+
+  return {
+    stats,
+    quickActions,
+    recentScripts,
+    templates,
+    carModels,
+    historyItems,
+    templateCategories,
+    carBrands,
+    addToHistory,
+    toggleFavorite,
+    searchTemplates,
+    searchCarModels
+  }
+})
